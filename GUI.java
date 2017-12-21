@@ -18,6 +18,11 @@ public class GUI extends JFrame
     public GUI()
     {
         super("GUI");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setMinimumSize(new Dimension(1250,650));
+        setMaximumSize(new Dimension(1250,650));
+        //setSize(1250,650);
+        //setPreferredSize(new Dimension(400, 300));
         
         JPanel contentPane = new JPanel(new GridLayout(0,2,0,0));
         JPanel grid = new JPanel(new BorderLayout());
@@ -46,11 +51,14 @@ public class GUI extends JFrame
         buttons.add(resetButton);
         buttons.add(route);
         
+        makeGUI();
+        
         //Reset Grid
         resetButton.addActionListener(e-> 
         {
-
-            
+            gamePanel.removeAll();
+            gamePanel.revalidate();
+            makeGUI();
         });
         
         //Stuur Route
@@ -59,17 +67,11 @@ public class GUI extends JFrame
             
         });
         
-        reset();
-        validate();
-        setSize(1250,650);
-        //setPreferredSize(new Dimension(400, 300));
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
         setVisible(true);
         
     }
     
-    private void reset()
+    private void makeGUI()
     {
         for(int y = 0; y < height; y++)
         {
@@ -83,6 +85,10 @@ public class GUI extends JFrame
                 field[y][x].getButton().addActionListener(e -> click(xx,yy));
             }
         }
+    }
+    
+    private void reset()
+    {
     }
     
     private void click(int x, int y)
