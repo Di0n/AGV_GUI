@@ -10,16 +10,11 @@ public class GUI extends JFrame
 {
     private int width = 5;
     private int height = 5;
-<<<<<<< HEAD
     private boolean firstClick = true;
     private int lastX;
     private int lastY;
 
     Cell field[][] = new Cell[25][25]; 
-=======
-    
-    Cell field[][] = new Cell[5][5]; 
->>>>>>> develop
     ArrayList<ImageIcon> gridPhotos;
     JPanel gamePanel;
 
@@ -44,11 +39,7 @@ public class GUI extends JFrame
         gridPhotos = new ArrayList<ImageIcon>();
         gridPhotos.add(new ImageIcon("grid1.png"));
         gridPhotos.add(new ImageIcon("grid2.png"));
-<<<<<<< HEAD
 
-=======
-        
->>>>>>> develop
         //Grid:
         grid.add(new JLabel("Grid:"), BorderLayout.NORTH);
         gamePanel = new JPanel(new GridLayout(height, width,0,0));
@@ -59,7 +50,6 @@ public class GUI extends JFrame
         buttons.add(new JLabel("Tekst voor de knopper of informatie over de GUI"));
         JButton resetButton = new JButton("Reset");
         JButton route = new JButton("Stuur Route naar BoeBot:");
-        
         buttons.add(resetButton);
         buttons.add(route);
 
@@ -108,7 +98,6 @@ public class GUI extends JFrame
 
     private void click(int x, int y)
     {
-<<<<<<< HEAD
         if(firstClick == true)
         {
             field[y][x].getButton().setIcon(gridPhotos.get(1));
@@ -144,9 +133,4 @@ public class GUI extends JFrame
         return isNextTo;
     }
 
-=======
-        field[y][x].getButton().setIcon(gridPhotos.get(1));
-        System.out.println(field[y][x].getX());
-    }
->>>>>>> develop
 }
