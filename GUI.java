@@ -11,7 +11,7 @@ public class GUI extends JFrame
     private int width = 5;
     private int height = 5;
     
-    Cell field[][] = new Cell[25][25]; 
+    Cell field[][] = new Cell[5][5]; 
     ArrayList<ImageIcon> gridPhotos;
     JPanel gamePanel;
     
@@ -36,7 +36,6 @@ public class GUI extends JFrame
         gridPhotos = new ArrayList();
         gridPhotos.add(new ImageIcon("grid1.png"));
         gridPhotos.add(new ImageIcon("grid2.png"));
-        gridPhotos.add(new ImageIcon("grind3.png"));
         
         //Grid:
         grid.add(new JLabel("Grid:"), BorderLayout.NORTH);
@@ -48,6 +47,7 @@ public class GUI extends JFrame
         buttons.add(new JLabel("Tekst voor de knopper of informatie over de GUI"));
         JButton resetButton = new JButton("Reset");
         JButton route = new JButton("Stuur Route naar BoeBot:");
+        
         buttons.add(resetButton);
         buttons.add(route);
         
@@ -94,6 +94,6 @@ public class GUI extends JFrame
     private void click(int x, int y)
     {
         field[y][x].getButton().setIcon(gridPhotos.get(1));
+        System.out.println(field[y][x].getX());
     }
-    
 }
