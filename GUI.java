@@ -3,6 +3,8 @@ import java.awt.Insets;
 import java.awt.event.*;
 import javax.swing.*;
 import java.util.*;
+import java.awt.BorderLayout;
+import javax.swing.JButton;
 
 public class GUI extends JFrame
 {
@@ -16,7 +18,6 @@ public class GUI extends JFrame
     public GUI()
     {
         super("GUI");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
         JPanel contentPane = new JPanel(new GridLayout(0,2,0,0));
         JPanel grid = new JPanel(new BorderLayout());
@@ -45,7 +46,7 @@ public class GUI extends JFrame
         buttons.add(resetButton);
         buttons.add(route);
         
-        //Rest Grid
+        //Reset Grid
         resetButton.addActionListener(e-> 
         {
 
@@ -60,8 +61,12 @@ public class GUI extends JFrame
         
         reset();
         validate();
-        setSize(800,600);
+        setSize(1250,650);
+        //setPreferredSize(new Dimension(400, 300));
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
         setVisible(true);
+        
     }
     
     private void reset()
@@ -73,6 +78,7 @@ public class GUI extends JFrame
                 final int xx = x;
                 final int yy = y;
                 field[y][x] = new Cell(new JButton(""));
+                
                 gamePanel.add(field[y][x].getButton());
                 field[y][x].getButton().addActionListener(e -> click(xx,yy));
             }

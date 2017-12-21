@@ -15,7 +15,7 @@ public class Cell extends JButton
         button.setMargin(new Insets(0,0,0,0));
         button.setContentAreaFilled(false);
         button.setFocusPainted(false);
-        //button.setBorder(new EmptyBorder(0,0,0,0));
+        button.setBorderPainted(false);
     }
     
     public JButton getButton()
