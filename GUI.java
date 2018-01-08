@@ -5,10 +5,13 @@ import javax.swing.*;
 import java.util.*;
 import java.awt.BorderLayout;
 import javax.swing.JButton;
+import java.io.*;
+import java.util.List;
+import java.util.ArrayList;
 
 public class GUI extends JFrame
 {
-    private ArrayList<Integer> data;
+    private ArrayList<Byte> dataGUI;
 
     private int width = 5;
     private int height = 5;
@@ -17,6 +20,7 @@ public class GUI extends JFrame
     private int lastY;
     private int secondLastX;
     private int secondLastY;
+    private Bluetooth bluetooth;
 
     Cell field[][] = new Cell[25][25]; 
     ArrayList<ImageIcon> gridPhotos;
@@ -30,7 +34,9 @@ public class GUI extends JFrame
         setMaximumSize(new Dimension(1250,650));
         //setSize(1250,650);
         //setPreferredSize(new Dimension(400, 300));
-
+        
+        //Bluetooth bluetooth = new Bluetooth("COM5");
+        
         JPanel contentPane = new JPanel(new GridLayout(0,2,0,0));
         JPanel grid = new JPanel(new BorderLayout());
         JPanel buttons = new JPanel(new GridLayout(3,1));
@@ -58,7 +64,7 @@ public class GUI extends JFrame
         buttons.add(route);
 
         makeGUI();
-        data = new ArrayList<Integer>();
+        dataGUI = new ArrayList<Byte>();
 
         //Reset Grid
         resetButton.addActionListener(e-> 
@@ -67,21 +73,34 @@ public class GUI extends JFrame
                 gamePanel.revalidate();
                 makeGUI();
                 firstClick = true;
-                data.clear();
+                dataGUI.clear();
 
             });
+            
+        bluetooth = new Bluetooth("COM5");   
+        bluetooth.open();
+        byte[] primeArray = new byte[dataGUI.size()];
+        
+        for(int i = 0 ; i < dataGUI.size() ; i++)
+        {
+            primeArray[i] = dataGUI.get(i);
+        }
 
+        
         //Stuur Route
         route.addActionListener(e ->
             {
-                data.add(0x00);
+                dataGUI.add((byte)0x00);
                 System.out.println("einde");
                 // for(Integer command : data)
                 //     System.out.println(command);
-
+                bluetooth.sendData(primeArray);
             });
+       
+
         setVisible(true);
     }
+    
     private void makeGUI()
     {
         for(int y = 0; y < height; y++)
@@ -110,8 +129,8 @@ public class GUI extends JFrame
         if(firstClick == true)
         {
             field[y][x].getButton().setIcon(gridPhotos.get(1));
-            data.add(0x3e);
-            data.add(0x66);
+            dataGUI.add((byte)0x3e);
+            dataGUI.add((byte)0x66);
             System.out.println("begin");
             System.out.println("F");
 
@@ -158,31 +177,25 @@ public class GUI extends JFrame
 
     private void makeRouteCommand(int x, int y)
     {
-        Integer command;
         if(isGoingStraight(x, y))
         {
-            command = 0x66;
-            System.out.println("F");
+            dataGUI.add((byte)0x66);
+            //System.out.println("F");
         }
         else if(isGoingLeft(x, y))
         {   
-            command = 0x72;
-            System.out.println("L");
+            dataGUI.add((byte)0x72);
+            //System.out.println("L");
         }
         else if(isGoingRight(x, y))
         {
-            command = 0x6c;
-            System.out.println("R");
+            dataGUI.add((byte)0x6c);
+            //System.out.println("R");
         }
         else
         {
-            command = 0x66;
-            System.out.println("moet gefixt worden");
-            /* stap na de eerste kruising
-             * kan nog niet bepaald worden..
-             */ 
+
         }    
-        data.add(command);
         
     }
 
