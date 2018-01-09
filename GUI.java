@@ -34,9 +34,9 @@ public class GUI extends JFrame
         setMaximumSize(new Dimension(1250,650));
         //setSize(1250,650);
         //setPreferredSize(new Dimension(400, 300));
-        
+
         //Bluetooth bluetooth = new Bluetooth("COM5");
-        
+
         JPanel contentPane = new JPanel(new GridLayout(0,2,0,0));
         JPanel grid = new JPanel(new BorderLayout());
         JPanel buttons = new JPanel(new GridLayout(3,1));
@@ -76,31 +76,39 @@ public class GUI extends JFrame
                 dataGUI.clear();
 
             });
-            
-        bluetooth = new Bluetooth("COM5");   
+
+        bluetooth = new Bluetooth("COM9");   
         bluetooth.open();
-        byte[] primeArray = new byte[dataGUI.size()];
-        
+        /* byte[] primeArray = new byte[dataGUI.size()];
+
         for(int i = 0 ; i < dataGUI.size() ; i++)
         {
-            primeArray[i] = dataGUI.get(i);
+        primeArray[i] = dataGUI.get(i);
         }
+         */
 
-        
         //Stuur Route
         route.addActionListener(e ->
             {
+                dataGUI.add((byte)0x73);
                 dataGUI.add((byte)0x00);
-                System.out.println("einde");
+                
+                //System.out.println("einde");
                 // for(Integer command : data)
                 //     System.out.println(command);
+                byte[] primeArray = new byte[dataGUI.size()];
+
+                for(int i = 0 ; i < dataGUI.size() ; i++)
+                {
+                    primeArray[i] = dataGUI.get(i);
+                }
                 bluetooth.sendData(primeArray);
+                dataGUI.clear();
             });
-       
 
         setVisible(true);
     }
-    
+
     private void makeGUI()
     {
         for(int y = 0; y < height; y++)
@@ -131,8 +139,8 @@ public class GUI extends JFrame
             field[y][x].getButton().setIcon(gridPhotos.get(1));
             dataGUI.add((byte)0x3e);
             dataGUI.add((byte)0x66);
-            System.out.println("begin");
-            System.out.println("F");
+            //System.out.println("begin");
+            //System.out.println("F");
 
             lastX = x;
             lastY = y;
@@ -182,21 +190,21 @@ public class GUI extends JFrame
             dataGUI.add((byte)0x66);
             //System.out.println("F");
         }
-        else if(isGoingLeft(x, y))
+        else if(isGoingRight(x, y))
         {   
             dataGUI.add((byte)0x72);
             //System.out.println("L");
         }
-        else if(isGoingRight(x, y))
+        else if(isGoingLeft(x, y))
         {
             dataGUI.add((byte)0x6c);
             //System.out.println("R");
         }
         else
         {
-
+            dataGUI.add((byte)0x66);
         }    
-        
+
     }
 
     private boolean isGoingStraight(int x, int y)
@@ -211,14 +219,13 @@ public class GUI extends JFrame
         return straight;
     }
 
-    
     /*
      * Volgende twee methodenamen zijn goed
      * Variabelenamen in de methode zijn verkeerd
      * Had ze verkeerdom geimplementeerd
      * en heb geen zin om alles aan te passen..
      */
-    
+
     private boolean isGoingRight(int x, int y)
     {
         boolean left = false;
@@ -249,7 +256,7 @@ public class GUI extends JFrame
             right = true;
         else
             right = false;
-            
+
         return right;
     }
 }
