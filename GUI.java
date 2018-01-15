@@ -57,7 +57,7 @@ public class GUI extends JFrame
         //JLabel gridPhoto = new JLabel(gridPhotos.get(0));
 
         //Buttons
-        buttons.add(new JLabel("Tekst voor de knopper of informatie over de GUI"));
+        buttons.add(new JLabel("Selecteer het patroon die de BoeBot moet rijden door de gridknoppen te selecteren!"));
         JButton resetButton = new JButton("Reset");
         JButton route = new JButton("Stuur Route naar BoeBot:");
         buttons.add(resetButton);
